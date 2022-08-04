@@ -56,6 +56,11 @@ interface Options {
 	optimiser?: boolean;
 	fps?: number;
 	quality?: number;
+	overrideWidth?: number;
+	overrideHeight?: number;
+	gifX?: number;
+	gifY?: number;
+	backgroundColor?: string; // set to black by default
 }
 
 /**
@@ -111,8 +116,8 @@ export = async function canvasGif(
 	// Decode the gif and begin the encoder
 	const { width, height, frames } = decodeGif(bufferToEdit);
 	const encoder = new GIFEncoder(
-		width,
-		height,
+		options.overrideWidth ?? width,
+		options.overrideHeight ?? height,
 		algorithm,
 		optimiserEnabled,
 		frames.length
@@ -128,15 +133,20 @@ export = async function canvasGif(
 	// Render each frame and add it to the encoder
 	frames.forEach((frame, i) => {
 		// Create the frame's canvas
-		const canvas = createCanvas(width, height);
+		const canvas = createCanvas(options.overrideWidth ?? width, options.overrideHeight ?? height);
 		const ctx = canvas.getContext('2d');
+
+		if (options.backgroundColor) {
+			ctx.fillStyle = options.backgroundColor;
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+		}
 
 		// Create image data from the frame's data and put it on the canvas
 		const data = createImageData(frame.data, width, height);
-		ctx.putImageData(data, 0, 0);
+		ctx.putImageData(data, options.gifX ?? 0, options.gifY ?? 0);
 
 		// Run the user's custom edit function, and add the frame
-		editFrame(ctx, width, height, frames.length, i + 1, encoder);
+		editFrame(ctx, options.overrideWidth ?? width, options.overrideHeight ?? height, frames.length, i + 1, encoder);
 		encoder.addFrame(ctx);
 	});
 
