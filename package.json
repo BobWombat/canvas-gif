@@ -1,7 +1,7 @@
 {
-	"name": "canvas-gif",
-	"author": "newtykins",
-	"repository": "https://github.com/newtykins/canvas-gif",
+	"name": "@bobwombat/canvas-gif",
+	"author": "newtykins, bobwombat",
+	"repository": "https://github.com/bobwombat/canvas-gif",
 	"description": "Manipulate GIFs easily using node-canvas!",
 	"version": "1.0.1",
 	"main": "dist/index.js",
