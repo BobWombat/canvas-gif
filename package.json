@@ -3,7 +3,7 @@
 	"author": "newtykins, bobwombat",
 	"repository": "https://github.com/bobwombat/canvas-gif",
 	"description": "Manipulate GIFs easily using node-canvas!",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"main": "dist/index.js",
 	"license": "OQL",
 	"scripts": {
